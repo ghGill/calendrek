@@ -32,9 +32,15 @@ class eventController {
 
             const condition_query = conditions.join(' UNION ');
             const sql_query = `
-                SELECT *, BIT_OR(type) event_type  
-                FROM ( ${condition_query} ) t
-                WHERE user_id IN (0, ${user_id})
+                SELECT e.*, BIT_OR(ut.type) event_type
+                FROM (
+                    SELECT id, type  
+                    FROM ( 
+                        ${condition_query} 
+                    ) t
+                    WHERE user_id IN (0, ${user_id})
+                ) ut
+                LEFT JOIN events e ON e.id = ut.id 
                 GROUP BY id
             `;
             
