@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const eventController = require("../controllers/event");
 
-// router.get('/update-heb', eventController.getUpdateHebEvents);
 router.post('/get', eventController.getAllEvents);
 router.post('/month', eventController.getMonthEvents);
 router.post('/yearly', eventController.getYearlyEvents);

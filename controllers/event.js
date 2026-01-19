@@ -4,23 +4,6 @@ class eventController {
     constructor() {
     }
 
-    // async getUpdateHebEvents(req, res) {
-    //     try {
-    //         const sql_query = `
-    //             SELECT *
-    //             FROM events
-    //             WHERE h_day < -1
-    //         `;
-            
-    //         const [rows] = await db.connection.execute(sql_query);
-
-    //         res.status(200).json({ success: true, data: rows })
-    //     }
-    //     catch (e) {
-    //         res.status(500).json({ success: false, message: e.message })
-    //     }
-    // }
-
     async getAllEvents(req, res) {
         try {
             const user_id = req.body.user_id;
