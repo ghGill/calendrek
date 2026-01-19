@@ -4,6 +4,23 @@ class eventController {
     constructor() {
     }
 
+    // async getUpdateHebEvents(req, res) {
+    //     try {
+    //         const sql_query = `
+    //             SELECT *
+    //             FROM events
+    //             WHERE h_day < -1
+    //         `;
+            
+    //         const [rows] = await db.connection.execute(sql_query);
+
+    //         res.status(200).json({ success: true, data: rows })
+    //     }
+    //     catch (e) {
+    //         res.status(500).json({ success: false, message: e.message })
+    //     }
+    // }
+
     async getAllEvents(req, res) {
         try {
             const user_id = req.body.user_id;
@@ -126,16 +143,16 @@ class eventController {
             data.push((g_month > -1) ? `${g_month}` : '-1');
             data.push((h_day > -1) ? `${h_day}` : '-1');
             data.push((h_month > -1) ? `${h_month}` : '-1');
-            data.push(description ? `'${description}'` : 'NULL');
+            data.push(description ? `${description}` : 'NULL');
             const data_query = data.join(',');
 
             const sql = `
                     INSERT INTO events 
                     (user_id, g_day, g_month, h_day, h_month, description)
-                    VALUES (${data_query});
+                    VALUES (?, ?, ?, ?, ?, ?);
                 `;
 
-            const [result] = await db.connection.execute(sql);
+            const [result] = await db.connection.execute(sql, data);
 
             res.status(200).json({ success: true, id:result.insertId })
         }
