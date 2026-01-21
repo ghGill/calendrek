@@ -144,6 +144,40 @@ class eventController {
         }
     }
 
+    async updateEvent(req, res) {
+        try {
+            const record_id = req.body.id;
+
+            let data = [
+                req.body.user_id,
+                req.body.g_day,
+                req.body.g_month,
+                req.body.h_day,
+                req.body.h_month,
+                req.body.description
+            ];
+
+            const sql = `
+                    UPDATE events
+                    SET 
+                    user_id = ? ,
+                    g_day = ? ,
+                    g_month = ? ,
+                    h_day = ? ,
+                    h_month = ? ,
+                    description = ?
+                    WHERE id = ${record_id}
+                `;
+
+            const [result] = await db.connection.execute(sql, data);
+
+            res.status(200).json({ success: true, id:result.insertId })
+        }
+        catch (e) {
+            res.status(500).json({ success: false, message: e.message })
+        }
+    }
+
     async deleteEvent(req, res) {
         try {
             const { id } = req.body;
