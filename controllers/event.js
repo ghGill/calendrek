@@ -99,6 +99,7 @@ class eventController {
                 WHERE
                 ${(type == 'greg') ? ' (g_day>-1) AND (g_month>-1) ' : ' (h_day>-1) AND (h_month>-1) '}
                 AND user_id IN (0, ${user_id})
+                AND printable = 1
                 ORDER BY 
                 ${(type == 'greg') ? 'g_month,g_day' : 'h_month,h_day'}
             `;
